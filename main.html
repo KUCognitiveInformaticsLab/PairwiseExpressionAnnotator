@@ -1,0 +1,125 @@
+<div id="content" class="content">
+      <div id="page1" class="instruction_page">
+            <h3> Welcome!</h3><br>
+
+            CONSENT FORM. <br><br>Please click 'Continue' if you give your consent. <br><br>
+
+            This experiment is part of research into conducted at RIKEN, led by Dongsheng Yang (yang.dongsheng.46w@st.kyoto-u.ac.jp). <br><br>
+
+            PARTICIPANTS' RIGHTS<br>
+            You may decide to stop being a part of the research study at any time without explanation. You have the right to ask that any data you have supplied to that point be withdrawn/destroyed.<br>
+            You have the right to have your questions about the procedures answered (unless answering these questions would interfere with the outcome of the study).<br><br>
+            
+            BENEFITS AND RISKS<br>
+            There are no known benefits or risks for you in this study.<br><br>
+            
+            COST, REIMBURSEMENT AND COMPENSATION<br>
+            Your participation in this study is voluntary. You will receive money to compensate your for your time.<br><br>
+            
+            CONFIDENTIALITY/ANONYMITY<br>
+            The data we collect does not contain any personal information about you. No one will link the data you provided to identifying information.<br><br>
+            
+            Please only click on 'Continue' if you give your consent, after having read the above information.<br><br>
+
+
+            <button onclick="window.toggle_instruction('id_page')"  > Continue! </button>
+
+      </div>
+
+      <div id="id_page" class="hidden instruction_page"> 
+            <div>
+                <h3> 
+                        <!-- Your id is <label id="partcipant_id">N/A</label>  -->
+                        Please input your id: <input type="text" name="id" id='id' />
+                </h3>
+            </div>
+            <p id="showID"></p>
+            <input type="button" id="show_id_btn" value="Show ID" onclick="showID()" /> <br> <br>
+            
+            <button  onclick="window.toggle_instruction('rating_page')"  > Continue! </button>
+            <button  onclick="window.toggle_instruction('page1')"  > Back! </button>
+      </div>
+
+      <div id="rating_page" class="hidden instruction_page">
+            <h3>How much do you think the robot's expression is like people's happy expressions?</h3> <br>
+            <h4>Please selete the rating below and click submit button for your rating.</h4><br>
+
+            <div id="rating">
+            <fieldset>
+                <legend>Select a rating:</legend>
+                      <div>
+                        <input type="radio" id="a" name="rating" value="1"> 1
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="b" name="rating" value="2"> 2 
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="c" name="rating" value="3"> 3 
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="d" name="rating" value="4"> 4
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="e" name="rating" value="5"> 5
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="f" name="rating" value="6"> 6
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="g" name="rating" value="7"> 7
+                      </div>
+                      <br>
+
+                      <div>
+                        <input type="radio" id="h" name="rating" value="8"> 8
+                      </div>
+                      <br>
+                        
+                      <div>
+                            <p id="curResult"></p>
+                            <input type="button" name='btn' value="Show result" id="showResult" onclick="show_result()" /> <br>
+                      </div>
+            </fieldset>
+            </div>
+            
+            <button  onclick="my_submit(); window.toggle_instruction('waiting_page');"  > Submit and Continue! </button>
+            <button  onclick="window.toggle_instruction('id_page')"  > Back! </button>
+            <br>
+
+
+            
+            <!-- <button onclick="window.toggle_instruction('page4') "  > Continue! </button> <br>
+            <input type="button" name='btn' value="Show result" id="show_result" /> <br> 
+            -->
+            
+            <!-- <div id="finished">
+                <p>Hello</p>
+                Do you have any comments or questions?. <br>
+                <textarea id="feedbackText"  rows="5" cols="40"></textarea><br>
+                Click here to submit and finished the experiment. <br> 
+                <input type="submit" value="submit_data" id="submit_data">
+                <button id="submit_data"> Continue! </button>
+            </div> -->
+      </div>
+
+      <div id="waiting_page" class="hidden instruction_page">
+            <h1>Please wait for the instructions</h1>
+
+            <button  onclick="window.clean_radio_btn(); window.toggle_instruction('rating_page');"  > Go ahead! </button>
+      </div>
+
+</div>
+
+

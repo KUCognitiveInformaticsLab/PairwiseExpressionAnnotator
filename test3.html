@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <style>
+      .image-container {
+        display: flex;
+        justify-content: space-between;
+        width: 400px;
+        /* border: 10px; */
+        margin: 0 auto;
+      }
+      /* #image1 {
+        border: 2px solid blue;
+      } */
+      .image-group {
+        display: flex;
+        justify-content: space-evenly;
+        /* width: auto; */
+        /* border: 10px; */
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .image {
+        width: 224px;
+        /* height: 224px; */
+        cursor: pointer;
+        position: relative;
+        margin: 10px 10px 10px 10px; 
+        /* top right bottom left */
+      }
+      
+      .image input[type="radio"] {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+      }
+      
+      .selected {
+        border: 2px solid blue;
+      }
+      
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        width: 400px;
+        margin: 70px auto;
+      }
+      
+      .button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid gray;
+        /* top: 20px;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%); */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="image-container">
+      <div class="image-group">
+        <img id="image1" class="image" src="frame1.jpg" onclick="selectImage(this)">
+        <label for="radio1">
+          <input type="radio" id="radio1" name="selectedImage" onclick="selectRadio(this)">
+          Select Image 1
+        </label>
+      </div>
+      <div class="image-group">
+        <img id="image2" class="image" src="frame2.jpg" onclick="selectImage(this)">
+        <label for="radio2">
+          <input type="radio" id="radio2" name="selectedImage" onclick="selectRadio(this)">
+          Select Image 2
+        </label>
+      </div>
+    </div>
+    <div class="button-container">
+      <div id="backButton" class="button" onclick="goBack()">Back</div>
+      <div id="nextButton" class="button" onclick="goNext()">Next</div>
+    </div>
+    
+    <script>
+      let currentPair = 1;
+      let selectedImageId = "";
+      
+      function selectImage(image) {
+        selectRadio(image.nextElementSibling.firstElementChild);
+      }
+      
+      function selectRadio(radio) {
+        deselectImage();
+        radio.checked = true;
+        selectedImageId = radio.id.replace("radio", "image");
+        document.querySelector(`#${selectedImageId}`).classList.add("selected");
+      }
+      
+      function deselectImage() {
+        const selectedImage = document.querySelector(".selected");
+        if (selectedImage) {
+          selectedImage.classList.remove("selected");
+        }
+      }
+
+      const shuffledImages = shuffle(images);
+      const pairs = generatePairs(shuffledImages);
+      
+      function goNext() {
+        currentPair += 1;
+        updateImages();
+      }
+      
+      function goBack() {
+        currentPair -= 1;
+        updateImages();
+      }
+      
+      function updateImages() {
+        const backButton = document.querySelector("#backButton");
+        const nextButton = document.querySelector("#nextButton");
+        
+
+
+        if (currentPair === 1) {
+            backButton.style.display = "none";
+        } else {
+            backButton.style.display = "inline-block";
+        }
+        
+        if (currentPair === 3) {
+            nextButton.style.display = "none";
+        } else {
+            nextButton.style.display = "inline-block";
+        }
+    
+        deselectImage();
+        document.querySelector(`#${selectedImageId}`).src = `image${currentPair}_1.jpg`;
+        document.querySelector(`#radio${selectedImageId.replace("image", "")}`).checked = false;
+        selectedImageId = "";
+      }
+    </script>
+  </body>
+</html>

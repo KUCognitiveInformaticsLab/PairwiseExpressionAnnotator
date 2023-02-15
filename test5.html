@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .image {
+        height: 200px;
+        width: 200px;
+        display: inline-block;
+        margin: 10px;
+      }
+
+      .radio {
+        display: inline-block;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="imagesContainer"></div>
+    <button id="nextButton" onclick="goNext()">Next</button>
+
+    <script>
+      let images = [...Array(100).keys()]; // Create an array of 100 image indices
+      images = images.sort(() => Math.random() - 0.5); // Shuffle the indices randomly
+      let ratings = Array(100).fill().map(() => Array(100).fill(0)); // Create an array of 100x100 with all 0s
+      let selectedImage = null; // Stores the selected image
+      let currentImage = 0; // Stores the current image index
+
+      // Select an image
+      function selectImage(index) {
+        selectedImage = index;
+        document.querySelector("#radio1").disabled = false;
+        document.querySelector("#radio2").disabled = false;
+      }
+
+      // Rate an image
+      function rateImage(selected, rated) {
+        let i = images[currentImage];
+        let j = images[currentImage + 1];
+        if (selected === 1) {
+          ratings[i][j] = rated;
+        } else {
+          ratings[j][i] = rated;
+        }
+        document.querySelector("#radio1").checked = false;
+        document.querySelector("#radio2").checked = false;
+        document.querySelector("#radio1").disabled = true;
+        document.querySelector("#radio2").disabled = true;
+        selectedImage = null;
+      }
+
+      // Show the current pair of images
+      function showPair() {
+        let html = `
+          <div>
+            <img id="image1" class="image" src="image${images[currentImage]}.png" onclick="selectImage(1)">
+            <input id="radio1" class="radio" type="radio" name="rating" disabled onclick="rateImage(selectedImage, 2)">
+            <img id="image2" class="image" src="image${images[currentImage + 1]}.png" onclick="selectImage(2)">
+            <input id="radio2" class="radio" type="radio" name="rating" disabled onclick="rateImage(selectedImage, 1)">
+          </div>
+        `;
+        document.querySelector("#imagesContainer").innerHTML = html;
+      }
+
+      // Go to the next pair of images
+      function goNext() {
+        currentImage += 2;
+        if (currentImage >= images.length) {
+          document.querySelector("#imagesContainer").innerHTML = "All images have been rated!";
+          return;
+        }
+        showPair();
+      }
+
+      // Show the first pair of images
+      showPair();
+    </script>
+  </body>
+</html>

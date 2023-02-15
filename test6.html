@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .image {
+          width: 300px;
+          height: 200px;
+          margin: 10px;
+        }
+  
+        .radio {
+          margin-top: 10px;
+        }
+    </style>
+	<title>Image Comparison Test</title>
+	<script type="text/javascript">
+		var images = [
+			"image_1.png",
+			"image_2.png",
+			"image_3.png",
+			"image_4.png",
+			"image_5.png",
+            "image_6.png",
+            "image_7.png",
+            "image_8.png",
+            "image_9.png",
+            "image_10.png",
+
+			// Add more images here
+		];
+		
+		var pairs = [];
+		for (var i = 0; i < images.length; i++) {
+			for (var j = i + 1; j < images.length; j++) {
+				pairs.push([i, j]);
+			}
+		}
+		
+		function getNextPair(ratings) {
+			if (pairs.length == 0) {
+				alert("All pairs have been rated!");
+                alert(ratings);
+				return null;
+			}
+			
+			// Sort the pairs based on the difference in ratings
+			pairs.sort(function(a, b) {
+				var ratingA = ratings[a[0]] - ratings[a[1]];
+				var ratingB = ratings[b[0]] - ratings[b[1]];
+				return ratingA - ratingB;
+			});
+			
+			// Get the pair with the smallest difference in ratings
+            pairs = shuffle(pairs)
+			var nextPair = pairs.shift();
+			return nextPair;
+		}
+		
+		var ratings = [];
+		
+
+
+		function ratePair(image1, image2, rating) {
+			ratings[image1] = ratings[image1] || {};
+			ratings[image2] = ratings[image2] || {};
+			ratings[image1][image2] = rating;
+			ratings[image2][image1] = 1 - rating;
+			
+			// Get the next pair based on the current ratings
+			var nextPair = getNextPair(ratings);
+			if (nextPair) {
+				var image1 = nextPair[0];
+				var image2 = nextPair[1];
+				document.getElementById("image1").src = images[image1];
+				document.getElementById("image2").src = images[image2];
+			}
+		}
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+	</script>
+</head>
+<body>
+	<h1>Image Comparison Test</h1>
+	<p>Rate each pair of images based on your preference.</p>
+	<div>
+		<img class="image" id="image1" src="image_1.png" onclick="ratePair(0, 1, 1);">
+		<img class="image" id="image2" src="image_2.png" onclick="ratePair(1, 0, 1);">
+	</div>
+</body>
+</html>

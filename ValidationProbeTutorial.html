@@ -1,0 +1,147 @@
+<div id="tutorial" class="tutorial ">
+    <div class="tutorial"> 
+
+        <!-- <div id="page0" class="instruction_page" style="color:red">
+                This is a test run for this experiment. At this moment we are especially interested in hearing your opinion about the experiment and the tutorial. In this way we hope to improve the task for future participants. 
+                As such, the version of the experiment you will perform here has much fewer trials then the real experiment. 
+
+                <br><br>
+                At the end of the experiment, we will ask you for feedback, your opinion and if there was anything you think we can/should improve.  
+                <br><br>
+                <button  onclick="window.toggle_instruction('page1') "  > Continue! </button>
+        </div> -->
+
+        <div id="page1" class="instruction_page">
+            <h3> Welcome!</h3><br>
+
+            CONSENT FORM. <br><br>Please click 'Continue' if you give your consent. <br><br>
+
+            This experiment is part of research into conducted at Kyoto University, led by Mitchell van Zuijlen (vanzuijlen.mitchell.2y@kyoto-u.ac.jp). <br><br>
+
+            PARTICIPANTS' RIGHTS<br>
+            You may decide to stop being a part of the research study at any time without explanation. You have the right to ask that any data you have supplied to that point be withdrawn/destroyed.<br>
+            You have the right to have your questions about the procedures answered (unless answering these questions would interfere with the outcome of the study).<br><br>
+            
+            BENEFITS AND RISKS<br>
+            There are no known benefits or risks for you in this study.<br><br>
+            
+            COST, REIMBURSEMENT AND COMPENSATION<br>
+            Your participation in this study is voluntary. You will receive money to compensate your for your time.<br><br>
+            
+            CONFIDENTIALITY/ANONYMITY<br>
+            The data we collect does not contain any personal information about you. No one will link the data you provided to identifying information.<br><br>
+            
+            Please only click on 'Continue' if you give your consent, after having read the above information.<br><br>
+
+            <button  onclick="window.toggle_instruction('page2') "  > Continue! </button>
+        </div>
+
+        <div id="page2" class="hidden instruction_page">
+            <h3> Instructions!</h3><br>
+
+            In this experiment you will be presented with <span id='n_paintings'> </span> paintings. <br><br>
+            
+            Please note that some of the paintings can contain violent or sexual content. <br>
+            If you are unconfortable with this, please do do not continue. <br><br>
+
+            For each paintings there will be one or more 'probes'. The probes will be presented one at a time. <br>
+            The probes are 3D digital objects placed 'within' the paintings, replacing something within the original painting.   <br><br>
+
+            See this example, where the 'probe' replaces the head of the left figure wearing the white cape.<br>
+            <img src="/static/experiments/current/lightfields/stimuli/lightProbeExample.PNG" alt="">
+            <br>
+
+            Note that the shape of the probes can be very different compared to what you see here.
+            <br><br>
+            <button  onclick="window.toggle_instruction('page3')"  > Continue! </button>
+            <button  onclick="window.toggle_instruction('page1')"  > Back! </button>
+        </div>
+
+
+        <div id="page3" class="hidden instruction_page">
+            <h3> Instructions!</h3><br>
+
+            The appearance of the probe is rendered in the browser. This means that you can change the way the probe looks.  <br>
+            More specifically, you will be able to change the light, which changes how the probe looks. 
+
+            Your task will be to change the light in such a way that the probe best 'fits' into the painting. <br>
+            That is, make it so that the lighting on the probe best fits with the lighting of that section of the painting. 
+            <br><br>
+
+            You will be able to manipulate the intensity (brightness) of two types of light: directed and undirected light. <br>
+
+            <ul>
+                <li> <b> undirected light </b>: illuminates the entire equally probe, independently of direction.</li>
+                <li> <b> directed light </b>: illuminates the probe from a specific direction, making some portions brigher then others.</li>
+            </ul>
+            <br><br>
+
+
+            See this example of changing the "undirected light"<br>
+            <img src="/static/experiments/current/lightfields/stimuli/ambient_example.gif" alt=""> <br>
+
+            You can change the intensity of the "directed light"<br>
+            <img src="/static/experiments/current/lightfields/stimuli/spotlight_example.gif" alt=""> <br>
+
+            In the task you can change the intensity using sliders.
+
+
+            <br><br>
+            <button  onclick="window.toggle_instruction('page4')"  > Continue! </button>
+            <button  onclick="window.toggle_instruction('page2')"  > Back! </button>
+
+        </div>
+
+        <div id="page4" class="hidden instruction_page">
+            <h3> Instructions!</h3><br>
+
+            For the directed light you can also change the direction along three axis, using three sliders. <br>
+
+            <ul>
+                <li><b>X-axis</b>: Moving the directed light from left to right</li>
+                <li><b>Y-axis</b>: Moving the directed light from above to below</li>
+                <li><b>Z-axis</b>: Moving the directed light from the front to the back</li>
+            </ul>
+
+            <br>
+            The X-axis: <br>
+            <img src="/static/experiments/current/lightfields/stimuli/xAxis_example.gif" alt=""> <br>
+
+            The Y-axis: <br>
+            <img src="/static/experiments/current/lightfields/stimuli/yAxis_example.gif" alt=""> <br>
+
+            The Z-axis: <br>
+            <img src="/static/experiments/current/lightfields/stimuli/zAxis_example.gif" alt=""> <br>
+
+            There is also a little visualization directly below the sliders that displays the current position of the light.  <br>
+            You do not need to interact with this visualization, it's only there to help. You can ignore it if you do not consider it helpful!
+
+            <br><br>
+            <button  onclick="window.toggle_instruction('page5')"  > Continue! </button>
+            <button  onclick="window.toggle_instruction('page3')"  > Back! </button>
+
+        </div>
+        
+
+        <div id="page5" class="hidden instruction_page">
+            <h3> Instructions!</h3><br>
+
+            Changing the intensity of the direction (for the directed light) can be done using the sliders. <br>
+            Feel free to move the sliders around to test it out. <br><br>
+
+            As a reminder for task: <br>
+            You are required to use the sliders to make the probe best fit within the painted scene. <br>
+            When you think you have configured the sliders so the probe best fits in the scene, you can click the "Next" button. <br>
+            Note that the "Back" button resets the previous probe to the default settings. As such, try to only use it if you accidently continued to the next trial too early. <br><br>
+
+            <br><br>
+            <button  onclick="window.toggle_instruction('content_wrapper')"  > Start the task! </button>
+            <button  onclick="window.toggle_instruction('page4')"  > Back! </button>
+
+        </div>
+        
+        
+        
+
+    </div>
+</div>
