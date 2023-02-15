@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Rating</title>
+	<script>
+        // almost
+
+        var images = [];
+
+        // generate image names dynamically
+        for (var i = 1; i <= 10; i++) {
+            images.push("image_" + i + ".png");
+        }
+        
+        var ratedPairs = [];
+		var shuffledImages = shuffleArray(images);
+
+		function shuffleArray(array) {
+			// Fisher-Yates shuffle algorithm
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+
+		function compareImages(image1, image2) {
+			var existingRating = ratedPairs.find(function(pair) {
+				return (pair[0] == image1 && pair[1] == image2) || (pair[0] == image2 && pair[1] == image1);
+			});
+
+			if (existingRating) {
+				return existingRating[2];
+			} else {
+				var result = prompt('Which image do you prefer?\n\n' + image1 + ' or ' + image2);
+				
+                result = parseInt(result);
+
+				if (isNaN(result)) {
+					alert('Invalid rating');
+					return compareImages(image1, image2);
+				} else {
+					ratedPairs.push([image1, image2, result]);
+					return result;
+				}
+			}
+		}
+
+		function quickSort(array) {
+			if (array.length <= 1) {
+				return array;
+			} else {
+				var pivot = array[0];
+				var less = [];
+				var greater = [];
+
+				for (var i = 1; i < array.length; i++) {
+					var result = compareImages(pivot, array[i]);
+
+					if (result > 0) {
+						less.push(array[i]);
+					} else {
+						greater.push(array[i]);
+					}
+				}
+
+				return quickSort(less).concat([pivot], quickSort(greater));
+			}
+		}
+
+		function init() {
+			shuffledImages = quickSort(shuffledImages);
+			alert('All images sorted:\n\n' + shuffledImages);
+		}
+	</script>
+</head>
+<body onload="init()">
+	<h1>Image Rating</h1>
+	<p>Please rate the following pairs of images:</p>
+</body>
+</html>
