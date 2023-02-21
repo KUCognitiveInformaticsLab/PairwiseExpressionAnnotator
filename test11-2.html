@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Sort</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    .image-container {
+			display: flex;
+			/* display: inline-block; */
+			justify-content: space-around;
+			width: 224px;
+			/* border: 10px; */
+			margin: 0 auto;
+		}
+		/* #image1 {
+			border: 2px solid blue;
+		} */
+		.image-group {
+			display: flex;
+			/* display: inline-block; */
+			justify-content: space-evenly;
+			/* width: auto; */
+			/* border: 10px; */
+			flex-direction: column;
+			align-items: center;
+		}
+		
+		.image {
+			width: 224px;
+			/* height: 224px; */
+			cursor: pointer;
+			position: relative;
+			margin: 10px 10px 10px 10px; 
+			/* top right bottom left */
+		}
+  </style>
+</head>
+<body>
+  
+  <label for="Name">Name:</label>
+  <input type="text" id="Name" name="Name" placeholder="Jane Doe">
+
+
+  <h1>Image Sort</h1>
+
+  <div id="image-container">
+    <!-- Insert your 10 images here with unique ids -->
+    <img id="img7" class='image' src="image_7.png">
+    <img id="img1" class='image' src="image_1.png">
+    <img id="img5" class='image' src="image_5.png">
+    <img id="img3" class='image' src="image_3.png">
+    <img id="img9" class='image' src="image_9.png">
+    <img id="img4" class='image' src="image_4.png">
+    <img id="img6" class='image' src="image_6.png">
+    <img id="img2" class='image' src="image_2.png">
+    <img id="img8" class='image' src="image_8.png">
+    <img id="img10" class='image' src="image_10.png">
+  </div>
+  <hr>
+
+  <script>
+
+    var finalResult = [];
+
+    // Define a function to compare two images and ask the user to choose
+    async function compareImages(img1, img2, pairs) {
+      // Hide all other images while the comparison is being made
+      const images = Array.from(document.querySelectorAll('#image-container img'));
+      images.forEach(img => {
+        if (img !== img1 && img !== img2) {
+          img.classList.add('hidden');
+        }
+      });
+
+      return new Promise(resolve => {
+        // Create a new div to show the two images
+        const comparisonDiv = document.createElement('div');
+        comparisonDiv.appendChild(img1);
+        comparisonDiv.appendChild(img2);
+        document.body.appendChild(comparisonDiv);
+
+        // Attach click handlers to the images to get user input
+        img1.onclick = () => {
+          document.body.removeChild(comparisonDiv);
+
+          // Restore all hidden images
+          images.forEach(img => img.classList.remove('hidden'));
+
+          pairs.push([img1.id, img2.id, -1]);
+          resolve(-1);
+        };
+        img2.onclick = () => {
+          document.body.removeChild(comparisonDiv);
+
+          // Restore all hidden images
+          images.forEach(img => img.classList.remove('hidden'));
+
+          pairs.push([img1.id, img2.id, 1]);
+          resolve(1);
+        };
+      });
+    }
+
+    // Define a function to sort an array of images
+    async function mergeSort(images) {
+      const pairs = [];
+      var sortedImages = await mergeSortRecursive(images, pairs);
+      return { images, pairs, sortedImages};
+    }
+
+    async function mergeSortRecursive(images, pairs) {
+      // Base case: if there is only one image, return it
+      if (images.length <= 1) {
+        return images;
+      }
+
+      // Recursive case: divide the array into two sub-arrays
+      const mid = Math.floor(images.length / 2);
+      const left = images.slice(0, mid);
+      const right = images.slice(mid);
+
+      // Recursively sort the left and right sub-arrays
+      const sortedLeft = await mergeSortRecursive(left, pairs);
+      const sortedRight = await mergeSortRecursive(right, pairs);
+
+      // Merge the sorted sub-arrays together
+      const merged = [];
+      let i = 0, j = 0;
+      while (i < sortedLeft.length && j < sortedRight.length) {
+        const cmp = await compareImages(sortedLeft[i], sortedRight[j], pairs);
+        if (cmp === -1) {
+          merged.push(sortedRight[j++]);
+        } else {
+          merged.push(sortedLeft[i++]);
+        }
+      }
+      while (i < sortedLeft.length) {
+        merged.push(sortedLeft[i++]);
+      }
+      while (j < sortedRight.length) {
+        merged.push(sortedRight[j++]);
+      }
+      return merged;
+    }
+
+    sortedImgList = [];
+
+    // Sort the images and display the results
+    mergeSort(Array.from(document.querySelectorAll('#image-container img')))
+      .then(result => {
+        // Show the sorted images
+        const sortedContainer = document.createElement('div');
+
+        sortedImgList = result.sortedImages;
+
+        result.sortedImages.forEach(img => {
+          img.onclick = null;
+          img.cursor = 'default';
+          
+          sortedContainer.appendChild(img);
+        });
+        document.body.appendChild(sortedContainer);
+
+        // Display the pairwise comparisons made by the user
+        console.log('Pairwise comparisons:');
+        result.pairs.forEach(pair => {
+          console.log(`${pair[0]} vs. ${pair[1]}: ${pair[2]}`);
+          finalResult.push(pair);
+        });
+
+        // Show the "experiment finished" message
+        const finishMessage = document.createElement('p');
+        finishMessage.textContent = 'Experiment finished. Thank you!';
+        document.body.appendChild(finishMessage);
+    });
+
+  </script>
+</body>
+</html>

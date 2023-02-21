@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QuickSort Step-by-Step</title>
+  </head>
+  <body>
+    <h1>QuickSort Step-by-Step</h1>
+    <div id="array">4, 2, 7, 1, 3, 5, 6</div>
+    <button onclick="quicksortStep()">Next</button>
+    <script>
+      let array = document.getElementById("array").textContent.split(", ");
+      let i = 0;
+      let j = array.length - 1;
+      let current = i;
+
+      function quicksortStep() {
+        if (i < j) {
+          if (current < j) {
+            if (array[current] < array[j]) {
+              current++;
+              quicksortStep();
+            } else {
+              swap(array, current, j);
+              document.getElementById("array").textContent = array.join(", ");
+              j--;
+            }
+          } else {
+            swap(array, i, j);
+            document.getElementById("array").textContent = array.join(", ");
+            i++;
+            j--;
+            current = i;
+          }
+        }
+      }
+
+      function swap(array, index1, index2) {
+        console.log("Swapping " + array[index1] + " and " + array[index2]);
+        let temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+      }
+    </script>
+  </body>
+</html>

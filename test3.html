@@ -3,6 +3,7 @@
     <style>
       .image-container {
         display: flex;
+        /* display: inline-block; */
         justify-content: space-between;
         width: 400px;
         /* border: 10px; */
@@ -13,6 +14,7 @@
       } */
       .image-group {
         display: flex;
+        /* display: inline-block; */
         justify-content: space-evenly;
         /* width: auto; */
         /* border: 10px; */
@@ -90,6 +92,7 @@
       function selectRadio(radio) {
         deselectImage();
         radio.checked = true;
+        
         selectedImageId = radio.id.replace("radio", "image");
         document.querySelector(`#${selectedImageId}`).classList.add("selected");
       }

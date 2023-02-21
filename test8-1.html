@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .image-container {
+        display: flex;
+        /* display: inline-block; */
+        justify-content: space-around;
+        width: 100%;
+        /* border: 10px; */
+        margin: 0 auto;
+      }
+      /* #image1 {
+        border: 2px solid blue;
+      } */
+      .image-group {
+        display: flex;
+        /* display: inline-block; */
+        justify-content: space-evenly;
+        /* width: auto; */
+        /* border: 10px; */
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .image {
+        width: 224px;
+        /* height: 224px; */
+        cursor: pointer;
+        position: relative;
+        margin: 10px 10px 10px 10px; 
+        /* top right bottom left */
+      }
+      
+      .image input[type="radio"] {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+      }
+
+      .button {
+        padding: 10px 20px;
+        /* width: 30px; */
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid black; /* add a 1px solid black border */
+        text-align: center;
+      }
+      
+    </style>
+
+    <title>Image Rating</title>
+    <script>
+        var images = [];
+
+        // generate image names dynamically
+        for (var i = 1; i <= 10; i++) {
+            images.push("image_" + i + ".png");
+        }
+
+      function generatePairs(arr) {
+        const pairs = [];
+        for (let i = 0; i < arr.length; i++) {
+          for (let j = i + 1; j < arr.length; j++) {
+            pairs.push([arr[i], arr[j]]);
+          }
+        }
+        return pairs;
+      }
+
+      function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+      }
+
+      let pairs = shuffleArray(generatePairs(images));
+
+      let ratings = {};
+
+      function compareImages() {
+        let currentPair = pairs[0];
+        let image1 = currentPair[0];
+        let image2 = currentPair[1];
+
+        document.getElementById("image1").src = image1;
+        document.getElementById("image2").src = image2;
+
+        checkRadio("rating1");
+        checkRadio("rating2");
+
+        document.getElementById("rating1").checked = false;
+        document.getElementById("rating2").checked = false;
+
+        document.getElementById("nextButton").disabled = true;
+
+        document.getElementById("rating1").addEventListener("click", function() {
+            recordRating(image1, image2, 1);
+        });
+
+        document.getElementById("rating2").addEventListener("click", function() {
+            recordRating(image2, image1, 1);
+        });
+      }
+
+      function recordRating(image1, image2, rating) {
+        if (!ratings[image1]) {
+            ratings[image1] = {};
+        }
+        ratings[image1][image2] = rating;
+
+        document.getElementById("nextButton").disabled = false;
+      }
+
+      function nextPair() {
+          pairs = pairs.slice(1);
+
+          if (pairs.length === 0) {
+              alert("You have rated all images.");
+              return;
+          }
+
+      }
+
+      function selectImage(image) {
+        selectRadio(image.nextElementSibling.firstElementChild);
+      }
+      
+      function selectRadio(radio) {
+        deselectImage();
+        radio.checked = true;
+        
+        selectedImageId = radio.id.replace("rating", "image");
+        document.querySelector(`#${selectedImageId}`).classList.add("selected");
+      }
+
+      function deselectImage() {
+        const selectedImage = document.querySelector(".selected");
+        if (selectedImage) {
+          selectedImage.classList.remove("selected");
+        }
+      }
+
+      // check if radio button element exists
+      function checkRadio(myid) {
+        if (!document.getElementById(myid)) {
+          // create new label element
+          var newLabel = document.createElement("label");
+          newLabel.htmlFor = myid;
+          
+          // create new radio button element
+          var newRadio = document.createElement("input");
+          newRadio.type = "radio";
+          newRadio.id = myid;
+          newRadio.name = "selectedImage";
+          newRadio.onclick = function() {
+            selectRadio(this);
+          };
+
+          // add radio button element to label element
+          newLabel.appendChild(newRadio);
+    
+          // add new image and label elements to container
+          var container = document.getElementById("image-group-" + myid[myid.length - 1]);
+          container.appendChild(newLabel);
+        }
+      }
+      
+
+    </script>
+  </head>
+  <body>
+    <h1>Image Rating</h1>
+    <p>Instructions: Click the "Next" button to compare two images, and choose which image you prefer. You will not see any repeated comparisons.</p>
+    <div class="image-container">
+      <div class="image-group" id="image-group-1">
+        <img id="image1" class="image" src="" onclick="selectImage(this)">
+      </div>
+      <div class="image-group" id="image-group-2">
+        <img id="image2" class="image" src="" onclick="selectImage(this)">
+      </div>
+    </div>
+    <br>
+    <div id="nextButton" class="button" onclick="compareImages()" disabled="" style="width: 30px;">Next</div>
+  </body>
+</html>
