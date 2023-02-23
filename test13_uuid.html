@@ -1,0 +1,110 @@
+<style>
+  .image-container {
+    display: flex;
+    /* display: inline-block; */
+    justify-content: space-between;
+    width: 400px;
+    /* border: 10px; */
+    margin: 0 auto;
+  }
+  /* #image1 {
+    border: 2px solid blue;
+  } */
+  .image-group {
+    display: flex;
+    /* display: inline-block; */
+    justify-content: space-evenly;
+    /* width: auto; */
+    /* border: 10px; */
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .image {
+    width: 224px;
+    /* height: 224px; */
+    cursor: pointer;
+    position: relative;
+    margin: 10px 10px 10px 10px; 
+    /* top right bottom left */
+  }
+</style>
+
+<form id="myForm">
+  <label for="gender">Gender:</label>
+  <select id="gender" name="gender">
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select><br><br>
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age"><br><br>
+  <label for="area">Area:</label>
+  <input type="text" id="area" name="area"><br><br>
+  <input type="hidden" id="uuid" name="uuid" value="">
+  <input type="button" value="Submit" onclick="generateUUID(); test()">
+</form>
+
+<div id="practice-image-container" style="display: none;">
+  <img id="pr_hu_img1" class='image' src="pr_hu_img1.jpeg">
+  <img id="pr_hu_img2" class='image' src="pr_hu_img2.jpeg">
+  <img id="pr_rb_img1" class='image' src="image_5.png">
+  <img id="pr_rb_img2" class='image' src="image_3.png">
+</div>
+
+<div id="practice_success" style="display:none;"> 
+  <button  onclick="window.toggle_instruction('rating_page');" > Continue! </button>
+</div>
+
+<div id="imagegenerationtest"></div>
+<script>
+  function generateUUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (d + Math.random() * 16) % 16 | 0;
+      d = Math.floor(d / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    var uuidField = document.getElementById("uuid");
+    uuidField.value = uuid;
+    console.log(uuid);
+
+    
+    return uuid;
+  }
+
+  var images = [];
+  // generate image names dynamically, but only once
+  for (var i = 1; i <= 10; i++) {
+    images.push("image_" + i + ".png");
+  }
+
+  function shuffleArray(array) {
+					// Fisher-Yates shuffle algorithm
+					for (let i = array.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						[array[i], array[j]] = [array[j], array[i]];
+					}
+					return array;
+      }
+
+  function test() {
+
+    const imageContainer = document.getElementById("imagegenerationtest");
+    imageContainer.innerHTML = "";
+
+    var shuffledImages = shuffleArray(images);
+
+    
+    for (var i = 0; i < shuffledImages.length/2; i++) {
+        var img = document.createElement("img");
+        img.src = shuffledImages[i];
+        img.id = img.src.slice(6).slice(0, -4); // check id later
+        img.width = 224;
+        imageContainer.appendChild(img);
+    }
+
+    return shuffledImages;
+  }
+
+</script>

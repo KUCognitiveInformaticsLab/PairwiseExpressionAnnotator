@@ -22,102 +22,70 @@
             Please only click on 'Continue' if you give your consent, after having read the above information.<br><br>
 
 
-            <button onclick="window.toggle_instruction('id_page')"  > Continue! </button>
-
+            <button onclick="window.toggle_instruction('id_page'); generateUUID()"  > Continue! </button>
       </div>
 
       <div id="id_page" class="hidden instruction_page"> 
-            <div>
-                <h3> 
-                        <!-- Your id is <label id="partcipant_id">N/A</label>  -->
-                        Please input your id: <input type="text" name="id" id='id' />
-                </h3>
-            </div>
-            <p id="showID"></p>
-            <input type="button" id="show_id_btn" value="Show ID" onclick="showID()" /> <br> <br>
-            
-            <button  onclick="window.toggle_instruction('rating_page')"  > Continue! </button>
-            <button  onclick="window.toggle_instruction('page1')"  > Back! </button>
+        <form id="infoForm">
+          <label for="gender">Gender:</label>
+          <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select><br><br>
+
+          <label for="age">Age:</label>
+          <input type="number" id="age" name="age"><br><br>
+
+          <label for="area">Area:</label>
+            <option value="Africa">Africa</option>
+            <option value="Antarctica">Antarctica</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="North America">North America</option>
+            <option value="Oceania">Oceania</option>
+            <option value="South America">South America</option>
+          </select><br><br>
+
+          <input type="hidden" id="uuid" name="uuid" value="">
+          <!-- <input type="button" value="Submit" onclick="generateUUID()"> -->
+        </form>
+
+        <!-- Just for test -->
+        <p id="showID"></p>
+        <input type="button" id="show_id_btn" value="Show ID" onclick="showID()" /> <br> <br>
+        
+        <button  onclick="window.toggle_instruction('practice_page'); practiceTest()" > Continue! </button>
+        <button  onclick="window.toggle_instruction('page1')"  > Back! </button>
       </div>
 
+      <div id="practice_page" class="hidden instruction_page">
+        <h3> This is the practice section. You will see a pair of robot figures showing the happy expressions. Please click one figure from each pair that you think shows a happier face. </h3> <br>
+        <div id="practice-image-container">
+          <img id="pr_hu_img1" class='image' src="pr_hu_img1.jpeg">
+          <img id="pr_hu_img2" class='image' src="pr_hu_img2.jpeg">
+          <img id="pr_rb_img1" class='image' src="image_5.png">
+          <img id="pr_rb_img2" class='image' src="image_3.png">
+        </div>
+        <hr>
+
+        <div id="practice_success" style="display:none;"> 
+          <button  onclick="window.toggle_instruction('rating_page'); startExperiment()" > Continue! </button>
+        </div>
+      </div>
+      
       <div id="rating_page" class="hidden instruction_page">
-            <h3>How much do you think the robot's expression is like people's happy expressions?</h3> <br>
-            <h4>Please selete the rating below and click submit button for your rating.</h4><br>
-
-            <div id="rating">
-            <fieldset>
-                <legend>Select a rating:</legend>
-                      <div>
-                        <input type="radio" id="a" name="rating" value="1"> 1
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="b" name="rating" value="2"> 2 
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="c" name="rating" value="3"> 3 
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="d" name="rating" value="4"> 4
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="e" name="rating" value="5"> 5
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="f" name="rating" value="6"> 6
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="g" name="rating" value="7"> 7
-                      </div>
-                      <br>
-
-                      <div>
-                        <input type="radio" id="h" name="rating" value="8"> 8
-                      </div>
-                      <br>
-                        
-                      <div>
-                            <p id="curResult"></p>
-                            <input type="button" name='btn' value="Show result" id="showResult" onclick="show_result()" /> <br>
-                      </div>
-            </fieldset>
-            </div>
-            
-            <button  onclick="my_submit(); window.toggle_instruction('waiting_page');"  > Submit and Continue! </button>
-            <button  onclick="window.toggle_instruction('id_page')"  > Back! </button>
-            <br>
-
-
-            
-            <!-- <button onclick="window.toggle_instruction('page4') "  > Continue! </button> <br>
-            <input type="button" name='btn' value="Show result" id="show_result" /> <br> 
-            -->
-            
-            <!-- <div id="finished">
-                <p>Hello</p>
-                Do you have any comments or questions?. <br>
-                <textarea id="feedbackText"  rows="5" cols="40"></textarea><br>
-                Click here to submit and finished the experiment. <br> 
-                <input type="submit" value="submit_data" id="submit_data">
-                <button id="submit_data"> Continue! </button>
-            </div> -->
+        <h3> Take a break. And you are going to do the real experiment. It will takes about one hour. You can take a break anytime during the experiment. All you need to do is to click the image that matches the instruction.</h3> <br>
+        <h4> You will see a pair of robot figures showing the happy expressions. Please click one figure from each pair that you think shows a happier face. </h4> <br>
+        <div id="experiment-image-container"></div> <br>
+        
+        <button  onclick="my_submit(); window.toggle_instruction('finish_page');"  > Submit and Continue! </button>
+        <!-- <button  onclick="window.toggle_instruction('id_page')"  > Back! </button> -->
+        <br>
       </div>
 
-      <div id="waiting_page" class="hidden instruction_page">
-            <h1>Please wait for the instructions</h1>
-
-            <button  onclick="window.clean_radio_btn(); window.toggle_instruction('rating_page');"  > Go ahead! </button>
+      <div id="finish_page" class="hidden instruction_page">
+            <h1>Thank you.</h1>
       </div>
 
 </div>

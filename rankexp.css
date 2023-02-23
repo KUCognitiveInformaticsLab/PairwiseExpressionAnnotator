@@ -44,8 +44,21 @@
 }
 .stimuli{max-width:500px;max-height: 500px;}
 
-.image{
-    max-height: 600px;
+.image-container {
+    display: flex;
+    /* display: inline-block; */
+    justify-content: space-around;
+    width: 224px;
+    /* border: 10px; */
+    margin: 0 auto;
+}
+
+.image {
+    width: 224px;
+    cursor: pointer;
+    position: relative;
+    margin: 10px 10px 10px 10px; 
+    /* top right bottom left */
 }
 
 h1{
