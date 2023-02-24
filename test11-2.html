@@ -37,6 +37,23 @@
 			margin: 10px 10px 10px 10px; 
 			/* top right bottom left */
 		}
+
+    .number-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .number-container .number {
+    background-color: #F5F5DC;
+    font-size: 60px;
+    font-family: Arial, Helvetica, sans-serif;
+    /* border-radius: 50%; */
+    /* padding: 20px; */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
   </style>
 </head>
 <body>
@@ -46,24 +63,39 @@
 
   <h1>Image Sort</h1>
 
+  <div class="number-container">
+    <p class="number" id="experimentCounter">0</p>
+  </div>
+
   <div id="image-container">
     <!-- Insert your 10 images here with unique ids -->
-    <img id="img7" class='image' src="image_7.png">
-    <img id="img1" class='image' src="image_1.png">
-    <img id="img5" class='image' src="image_5.png">
-    <img id="img3" class='image' src="image_3.png">
-    <img id="img9" class='image' src="image_9.png">
-    <img id="img4" class='image' src="image_4.png">
-    <img id="img6" class='image' src="image_6.png">
-    <img id="img2" class='image' src="image_2.png">
-    <img id="img8" class='image' src="image_8.png">
-    <img id="img10" class='image' src="image_10.png">
+    <img id="img7" class='image' src="image_num_7.png" width="224px">
+    <img id="img1" class='image' src="image_num_1.png" width="224px">
+    <img id="img5" class='image' src="image_num_5.png" width="224px">
+    <img id="img3" class='image' src="image_num_3.png">
+    <img id="img9" class='image' src="image_num_9.png">
+    <img id="img4" class='image' src="image_num_4.png">
+    <img id="img6" class='image' src="image_num_6.png">
+    <img id="img2" class='image' src="image_num_2.png">
+    <img id="img8" class='image' src="image_num_8.png">
+    <img id="img10" class='image' src="image_num_10.png">
   </div>
   <hr>
 
   <script>
 
+    var experimentCount = 0;
+
+
+
+
+
     
+
+    // Remove keydown handler from document when not needed
+    // document.removeEventListener("keydown", handleKeydown);
+
+
 
     // Define a function to compare two images and ask the user to choose
     // The compareImages function returns a promise that resolves to either -1 
@@ -72,6 +104,7 @@
     async function compareImages(img1, img2, pairs) {
       // Hide all other images while the comparison is being made
       const images = Array.from(document.querySelectorAll('#image-container img'));
+      const numberElement = document.getElementById('experimentCounter');
       images.forEach(img => {
         if (img !== img1 && img !== img2) {
           img.classList.add('hidden');
@@ -86,7 +119,6 @@
         document.body.appendChild(comparisonDiv);
 
         // Attach click handlers to the images to get user input
-        
         img1.onclick = () => {
           document.body.removeChild(comparisonDiv);
 
@@ -94,6 +126,10 @@
           images.forEach(img => img.classList.remove('hidden'));
 
           pairs.push([img1.id, img2.id, -1]);
+          // add 1 to counter
+          experimentCount++;
+          numberElement.textContent = experimentCount;
+
           resolve(-1);
         };
         img2.onclick = () => {
@@ -103,8 +139,42 @@
           images.forEach(img => img.classList.remove('hidden'));
 
           pairs.push([img1.id, img2.id, 1]);
+          // add 1 to counter
+          experimentCount++;
+          numberElement.textContent = experimentCount;
+
           resolve(1);
         };
+
+        function selectImage(selectedImg, otherImg, result) {
+          // Remove the comparison div
+          document.body.removeChild(comparisonDiv);
+
+          // Restore all hidden images
+          images.forEach(img => img.classList.remove('hidden'));
+
+          pairs.push([selectedImg.id, otherImg.id, result]);
+          
+          // add 1 to counter
+          experimentCount++;
+          numberElement.textContent = experimentCount;
+          document.removeEventListener("keydown", handleKeydown)
+        }
+
+        function handleKeydown(event) {
+          if (event.key === "q") { // Q for selecting img1
+            console.log(event.key);
+            selectImage(img1, img2, -1);
+            resolve(-1);
+          } else if (event.key === "p") { // P for selecting img2
+            console.log(event.key);
+            selectImage(img2, img1, 1);
+            resolve(1);
+          }
+        }
+
+        // Attach keydown handler to document to get user input
+        document.addEventListener("keydown", handleKeydown);
       });
     }
 

@@ -48,12 +48,23 @@
 <div id="practice-image-container" style="display: none;">
   <img id="pr_hu_img1" class='image' src="pr_hu_img1.jpeg">
   <img id="pr_hu_img2" class='image' src="pr_hu_img2.jpeg">
-  <img id="pr_rb_img1" class='image' src="image_5.png">
-  <img id="pr_rb_img2" class='image' src="image_3.png">
+  <img id="pr_rb_img1" class='image' src="image_num_5.png">
+  <img id="pr_rb_img2" class='image' src="image_num_3.png">
 </div>
 
 <div id="practice_success" style="display:none;"> 
   <button  onclick="window.toggle_instruction('rating_page');" > Continue! </button>
+  
+</div>
+
+<button  onclick="keyboardevent();" > Do keyboard test! </button>
+
+<button id="activate-btn">Activate Keyboard Listener</button>
+<button id="destroy-btn">Destroy Keyboard Listener</button>
+
+
+<div id="keyboardtest">
+  <p id="k_text"></p>
 </div>
 
 <div id="imagegenerationtest"></div>
@@ -76,7 +87,7 @@
   var images = [];
   // generate image names dynamically, but only once
   for (var i = 1; i <= 10; i++) {
-    images.push("image_" + i + ".png");
+    images.push("image_num_" + i + ".png");
   }
 
   function shuffleArray(array) {
@@ -106,5 +117,72 @@
 
     return shuffledImages;
   }
+
+  let key_event_listeners;
+  function keyboardevent() {
+    key_event_listeners = document.addEventListener('keydown', (event) => {
+    var name = event.key;
+    var code = event.code;
+    if (name === 'Control') {
+      // Do nothing.
+      return;
+    }
+    if (event.ctrlKey) {
+      alert(`Combination of ctrlKey + ${name} \n Key code Value: ${code}`);
+    } else {
+      alert(`Key pressed ${name} \n Key code Value: ${code}`);
+    }
+  }, false);
+  // Add event listener on keyup
+  // document.addEventListener('keyup', (event) => {
+  //   var name = event.key;
+  //   if (name === 'Control') {
+  //     alert('Control key released');
+  //   }
+  // }, false);
+  }
+
+
+  // // Add event listener on keydown, when q is pressed, modifty k_text element
+  // document.addEventListener('keydown', (event) => {
+  //   var name = event.key;
+  //   var code = event.code;
+  //   if (name === 'Control') {
+  //     // Do nothing.
+  //     return;
+  //   }
+  //   if (event.ctrlKey) {
+  //     alert(`Combination of ctrlKey + ${name} \n Key code Value: ${code}`);
+  //   } else {
+  //     alert(`Key pressed ${name} \n Key code Value: ${code}`);
+  //   }
+  // }, false);
+
+// get the buttons and the body element
+const activateBtn = document.getElementById('activate-btn');
+const destroyBtn = document.getElementById('destroy-btn');
+const body = document.getElementsByTagName('body')[0];
+
+// define the keyboard event listener function
+function handleKeyPress(event) {
+  console.log(`You pressed the ${event.key} key!`);
+}
+
+// define the event listener activation and destruction functions
+function activateListener() {
+  body.addEventListener('keydown', handleKeyPress);
+  console.log('Keyboard event listener activated!');
+}
+
+function destroyListener() {
+  body.removeEventListener('keydown', handleKeyPress);
+  document.removeEventListener('keydown', key_event_listeners, false);
+  console.log('Keyboard event listener destroyed!');
+}
+
+// add event listeners to the buttons
+activateBtn.addEventListener('click', activateListener);
+destroyBtn.addEventListener('click', destroyListener);
+
 
 </script>
