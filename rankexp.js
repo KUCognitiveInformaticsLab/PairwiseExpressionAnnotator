@@ -124,12 +124,11 @@ async function compareImages(img1, img2, pairs, containerName) {
         comparisonDiv.style.justifyContent = 'center'; // add this line to center the images
         comparisonDiv.style.alignItems = 'center'; // add this line to center the images
         comparisonDiv.style.marginBottom = '20px'; // add some margin to the bottom of the div
+        comparisonDiv.id = 'comparisonDiv';
         img1.style.marginLeft = '20px'; // add some margin to the left of img1
         img1.style.marginRight = '20px'; // add some margin to the right of img1
         img2.style.marginLeft = '20px'; // add some margin to the left of img2
         img2.style.marginRight = '20px'; // add some margin to the right of img2
-        
-        
         if (document.getElementById('experiment_page').classList.contains('hidden')) {
             img1.classList.add('practice-image');
             img2.classList.add('practice-image');
@@ -137,43 +136,103 @@ async function compareImages(img1, img2, pairs, containerName) {
             img1.classList.add('image');
             img2.classList.add('image');
         }
-
-
-        comparisonDiv.appendChild(img1);
-        comparisonDiv.appendChild(img2);
+        // Randomly decide which image should be on the left and which should be on the right
+        reverseFlag = false;
+        if (Math.random() < 0.5) {
+            reverseFlag = true;
+        }
+        if (reverseFlag) {
+            comparisonDiv.appendChild(img2);
+            comparisonDiv.appendChild(img1);
+        } else {
+            comparisonDiv.appendChild(img1);
+            comparisonDiv.appendChild(img2);
+        }
         document.body.appendChild(comparisonDiv);
 
         // Attach click handlers to the images to get user input
-        
-        img1.onclick = () => {
-            document.body.removeChild(comparisonDiv);
+        if (reverseFlag) {
+            // If the images were reversed, then the user should click img2 if they think left image is greater
+            img1.onclick = () => {
+                let checkcomparisonDiv = document.getElementById('comparisonDiv');
+                if (checkcomparisonDiv) {
+                    console.log('comparisonDiv exists');
+                    checkcomparisonDiv.remove();
+                }
 
-            // Restore all hidden images
-            images.forEach(img => img.classList.remove('hidden'));
+                
 
-            pairs.push([img1.id, img2.id, -1]);
-            // add 1 to counter
-            experimentCount++;
-            numberElement.textContent = experimentCount;
-            resolve(-1);
-        };
-        img2.onclick = () => {
-            document.body.removeChild(comparisonDiv);
+                // Restore all hidden images
+                images.forEach(img => img.classList.remove('hidden'));
 
-            // Restore all hidden images
-            images.forEach(img => img.classList.remove('hidden'));
+                pairs.push([img2.id, img1.id, 1]);
+                // add 1 to counter
+                experimentCount++;
+                numberElement.textContent = experimentCount;
+                resolve(-1);
+            };
+            img2.onclick = () => {
+                let checkcomparisonDiv = document.getElementById('comparisonDiv');
+                if (checkcomparisonDiv) {
+                    console.log('comparisonDiv exists');
+                    checkcomparisonDiv.remove();
+                }
+                // document.body.removeChild(comparisonDiv);
 
-            pairs.push([img1.id, img2.id, 1]);
-            // add 1 to counter
-            experimentCount++;
-            numberElement.textContent = experimentCount;
-            resolve(1);
-        };
+                // Restore all hidden images
+                images.forEach(img => img.classList.remove('hidden'));
+
+                pairs.push([img2.id, img1.id, -1]);
+                // add 1 to counter
+                experimentCount++;
+                numberElement.textContent = experimentCount;
+                resolve(1);
+            };
+        } else {
+            img1.onclick = () => {
+                let checkcomparisonDiv = document.getElementById('comparisonDiv');
+                if (checkcomparisonDiv) {
+                    console.log('comparisonDiv exists');
+                    checkcomparisonDiv.remove();
+                }
+                // document.body.removeChild(comparisonDiv);
+
+                // Restore all hidden images
+                images.forEach(img => img.classList.remove('hidden'));
+
+                pairs.push([img1.id, img2.id, -1]);
+                // add 1 to counter
+                experimentCount++;
+                numberElement.textContent = experimentCount;
+                resolve(-1);
+            };
+            img2.onclick = () => {
+                let checkcomparisonDiv = document.getElementById('comparisonDiv');
+                if (checkcomparisonDiv) {
+                    console.log('comparisonDiv exists');
+                    checkcomparisonDiv.remove();
+                }
+                // document.body.removeChild(comparisonDiv);
+
+                // Restore all hidden images
+                images.forEach(img => img.classList.remove('hidden'));
+
+                pairs.push([img1.id, img2.id, 1]);
+                // add 1 to counter
+                experimentCount++;
+                numberElement.textContent = experimentCount;
+                resolve(1);
+            };
+        }
 
         // Attach keydown handler to document to get user input
         function selectImage(selectedImg, otherImg, result) {
             // Remove the comparison div
-            document.body.removeChild(comparisonDiv);
+            let checkcomparisonDiv = document.getElementById('comparisonDiv');
+            if (checkcomparisonDiv) {
+                console.log('comparisonDiv exists');
+                checkcomparisonDiv.remove();
+            }
   
             // Restore all hidden images
             images.forEach(img => img.classList.remove('hidden'));
@@ -189,19 +248,32 @@ async function compareImages(img1, img2, pairs, containerName) {
           }
   
         function handleKeydown(event) {
-        if (event.key === "q") { // Q for selecting img1
-            console.log(event.key);
-            selectImage(img1, img2, -1);
-            resolve(-1);
-        } else if (event.key === "p") { // P for selecting img2
-            console.log(event.key);
-            selectImage(img1, img2, 1);
-            resolve(1);
-        }
+
+            if (reverseFlag) {
+                if (event.key === "q") { // Q for selecting img2
+                    console.log(event.key);
+                    selectImage(img2, img1, -1);
+                    resolve(1);
+                } else if (event.key === "p") { // P for selecting img1
+                    console.log(event.key);
+                    selectImage(img2, img1, 1);
+                    resolve(-1);
+                }
+            } else {
+                if (event.key === "q") { // Q for selecting img1
+                    console.log(event.key);
+                    selectImage(img1, img2, -1);
+                    resolve(-1);
+                } else if (event.key === "p") { // P for selecting img2
+                    console.log(event.key);
+                    selectImage(img1, img2, 1);
+                    resolve(1);
+                }
+            }
         }
   
         // Attach keydown handler to document to get user input
-        document.addEventListener("keydown", handleKeydown);
+        document.addEventListener("keydown", handleKeydown, {once: true});
     });
 }
 
@@ -375,13 +447,14 @@ function get_my_result() {
     var age = document.getElementById("age").value;
     var area = document.getElementById("area").value;
     var participant_id = document.getElementById("participant_id").value;
+    var sortedList = sortedImgList.map(x => x.id.slice(91)+'.png')
     result = {
         'participant_id' : participant_id,
         'ID' : curID,
         'age' : age,
         'area' : area,
         'pairwise_rating' : finalResult,
-        'sortedlist' : sortedImgList,
+        'sortedlist' : sortedList,
     }
     console.log("result is ", result)
     return result;

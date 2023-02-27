@@ -112,21 +112,19 @@ padding-right:10px;
 /* Set image width to 50% on screens wider than 768px */
 @media screen and (min-width: 768px) {
     .practice-image {
-        height: 55% ;
+        height: 30%;
         max-height: 450px;
     }
 
     .image {
         width: 35% ;
-        max-height: 450px;
-
     }
 }
 
 /* Set image width to 80% on screens smaller than 768px */
 @media screen and (max-width: 767px) {
     .practice-image {
-        height: 45% ;
+        height: auto ;
         max-height: 450px;
     }
     .image {
