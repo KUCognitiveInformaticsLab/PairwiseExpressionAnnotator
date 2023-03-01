@@ -4,7 +4,7 @@ let curID;
 curID = 99999;
 const base_url = '/static/experiments/current/nikola_hitl_2nd/stimuli/happiness_selected_imgonly100/'
 var experimentCount = 0;
-
+const expIterval = 50;
 
 // Add your own javacript functions here. 
 function toggle_instruction(page){
@@ -118,6 +118,54 @@ async function compareImages(img1, img2, pairs, containerName) {
     });
 
     return new Promise(resolve => {
+        // define two inner function
+        // Attach keydown handler to document to get user input
+        function selectImage(selectedImg, otherImg, result) {
+            // Remove the comparison div
+            let checkcomparisonDiv = document.getElementById('comparisonDiv');
+            if (checkcomparisonDiv) {
+                console.log('comparisonDiv exists');
+                checkcomparisonDiv.remove();
+            }
+  
+            // Restore all hidden images
+            images.forEach(img => img.classList.remove('hidden'));
+  
+            pairs.push([selectedImg.id, otherImg.id, result]);
+            
+            // add 1 to counter
+            experimentCount++;
+            numberElement.textContent = experimentCount;
+
+            // destroy event listener once we have a response
+            document.removeEventListener("keydown", handleKeydown)
+        }
+  
+        function handleKeydown(event) {
+            if (reverseFlag) {
+                if (event.key === "q") { // Q for selecting img2
+                    console.log(event.key);
+                    selectImage(img2, img1, -1);
+                    resolve(1);
+                } else if (event.key === "p") { // P for selecting img1
+                    console.log(event.key);
+                    selectImage(img2, img1, 1);
+                    resolve(-1);
+                }
+            } else {
+                if (event.key === "q") { // Q for selecting img1
+                    console.log(event.key);
+                    selectImage(img1, img2, -1);
+                    resolve(-1);
+                } else if (event.key === "p") { // P for selecting img2
+                    console.log(event.key);
+                    selectImage(img1, img2, 1);
+                    resolve(1);
+                }
+            }
+        }
+
+        // here is the main part
         // Create a new div to show the two images
         const comparisonDiv = document.createElement('div');
         comparisonDiv.style.display = 'flex'; // add this line to make the images display side-by-side
@@ -129,6 +177,8 @@ async function compareImages(img1, img2, pairs, containerName) {
         img1.style.marginRight = '20px'; // add some margin to the right of img1
         img2.style.marginLeft = '20px'; // add some margin to the left of img2
         img2.style.marginRight = '20px'; // add some margin to the right of img2
+        // add the sleeping time before showing the image
+
         if (document.getElementById('experiment_page').classList.contains('hidden')) {
             img1.classList.add('practice-image');
             img2.classList.add('practice-image');
@@ -154,126 +204,31 @@ async function compareImages(img1, img2, pairs, containerName) {
         if (reverseFlag) {
             // If the images were reversed, then the user should click img2 if they think left image is greater
             img1.onclick = () => {
-                let checkcomparisonDiv = document.getElementById('comparisonDiv');
-                if (checkcomparisonDiv) {
-                    console.log('comparisonDiv exists');
-                    checkcomparisonDiv.remove();
-                }
-
-                
-
-                // Restore all hidden images
-                images.forEach(img => img.classList.remove('hidden'));
-
-                pairs.push([img2.id, img1.id, 1]);
-                // add 1 to counter
-                experimentCount++;
-                numberElement.textContent = experimentCount;
+                console.log('img1 clicked');
+                selectImage(img2, img1, 1)
                 resolve(-1);
             };
             img2.onclick = () => {
-                let checkcomparisonDiv = document.getElementById('comparisonDiv');
-                if (checkcomparisonDiv) {
-                    console.log('comparisonDiv exists');
-                    checkcomparisonDiv.remove();
-                }
-                // document.body.removeChild(comparisonDiv);
-
-                // Restore all hidden images
-                images.forEach(img => img.classList.remove('hidden'));
-
-                pairs.push([img2.id, img1.id, -1]);
-                // add 1 to counter
-                experimentCount++;
-                numberElement.textContent = experimentCount;
+                console.log('img2 clicked');
+                selectImage(img2, img1, -1)
                 resolve(1);
             };
         } else {
             img1.onclick = () => {
-                let checkcomparisonDiv = document.getElementById('comparisonDiv');
-                if (checkcomparisonDiv) {
-                    console.log('comparisonDiv exists');
-                    checkcomparisonDiv.remove();
-                }
-                // document.body.removeChild(comparisonDiv);
-
-                // Restore all hidden images
-                images.forEach(img => img.classList.remove('hidden'));
-
-                pairs.push([img1.id, img2.id, -1]);
-                // add 1 to counter
-                experimentCount++;
-                numberElement.textContent = experimentCount;
+                console.log('img1 clicked');
+                selectImage(img1, img2, -1)
                 resolve(-1);
             };
             img2.onclick = () => {
-                let checkcomparisonDiv = document.getElementById('comparisonDiv');
-                if (checkcomparisonDiv) {
-                    console.log('comparisonDiv exists');
-                    checkcomparisonDiv.remove();
-                }
-                // document.body.removeChild(comparisonDiv);
-
-                // Restore all hidden images
-                images.forEach(img => img.classList.remove('hidden'));
-
-                pairs.push([img1.id, img2.id, 1]);
-                // add 1 to counter
-                experimentCount++;
-                numberElement.textContent = experimentCount;
+                console.log('img2 clicked');
+                selectImage(img1, img2, 1)
                 resolve(1);
             };
         }
 
         // Attach keydown handler to document to get user input
-        function selectImage(selectedImg, otherImg, result) {
-            // Remove the comparison div
-            let checkcomparisonDiv = document.getElementById('comparisonDiv');
-            if (checkcomparisonDiv) {
-                console.log('comparisonDiv exists');
-                checkcomparisonDiv.remove();
-            }
-  
-            // Restore all hidden images
-            images.forEach(img => img.classList.remove('hidden'));
-  
-            pairs.push([selectedImg.id, otherImg.id, result]);
-            
-            // add 1 to counter
-            experimentCount++;
-            numberElement.textContent = experimentCount;
-
-            // destroy event listener once we have a response
-            document.removeEventListener("keydown", handleKeydown)
-          }
-  
-        function handleKeydown(event) {
-
-            if (reverseFlag) {
-                if (event.key === "q") { // Q for selecting img2
-                    console.log(event.key);
-                    selectImage(img2, img1, -1);
-                    resolve(1);
-                } else if (event.key === "p") { // P for selecting img1
-                    console.log(event.key);
-                    selectImage(img2, img1, 1);
-                    resolve(-1);
-                }
-            } else {
-                if (event.key === "q") { // Q for selecting img1
-                    console.log(event.key);
-                    selectImage(img1, img2, -1);
-                    resolve(-1);
-                } else if (event.key === "p") { // P for selecting img2
-                    console.log(event.key);
-                    selectImage(img1, img2, 1);
-                    resolve(1);
-                }
-            }
-        }
-  
-        // Attach keydown handler to document to get user input
         document.addEventListener("keydown", handleKeydown, {once: true});
+
     });
 }
 
@@ -303,6 +258,8 @@ async function mergeSortRecursive(images, pairs, containerName) {
     const merged = [];
     let i = 0, j = 0;
     while (i < sortedLeft.length && j < sortedRight.length) {
+        // set the interval between each comparison
+        await new Promise(r => setTimeout(r, expIterval));
         const cmp = await compareImages(sortedLeft[i], sortedRight[j], pairs, containerName);
         if (cmp === 1) {
         merged.push(sortedRight[j++]);
@@ -413,8 +370,11 @@ function startExperiment() {
 
         // Show the "experiment finished" message
         const finishMessage = document.createElement('h2');
-        finishMessage.textContent = 'Experiment finished. Thank you!';
+        finishMessage.textContent = "Experiment finished. Please click the Submit button to submit the data. If you don't want to submit your data, just close this site. Thank you!";
         document.body.appendChild(finishMessage);
+        
+        // submit the data
+        my_submit(); 
 
         // show the button
         document.getElementById("experiment_success").style.display = "block";
@@ -461,7 +421,7 @@ function get_my_result() {
 }
 
 function my_submit() {
-    getCurrentID();
+    curID = getCurrentID();
     var result = get_my_result()
 	submit_data(result)
 };

@@ -65,7 +65,7 @@
         <!-- Just for test -->
         <!-- <p id="showID"></p>
         <input type="button" id="show_id_btn" value="Show ID" onclick="showID()" /> <br> <br> -->
-        
+        <h3>Please use a monitor display larger than 13 inches for this experiment.</h3>
         <button  onclick="checkInfo();" class="my_button" > Continue! </button>
         <button  onclick="window.toggle_instruction('page1')" class="my_button"> Back! </button>
         <div id="error-message-info" style="color: red;"></div>
@@ -75,11 +75,11 @@
         <p> This is the practice section. You will see a pair of number figures. You need to choose the bigger number in each pair.  </p>
         <h3> Please choose the number that you think is bigger. </h2>
         <p><span style="font-size: 18px;"> You can use mouse to <span style="font-size: 30px;"><b>click</b></span> the figure you want to select directly.<br> Or you can also press <span style="font-size: 30px;"><b>q</b></span> on your keyboard for selecting the left figure, press <span style="font-size: 30px;"><b>p</b></span> for selecting the right figure. </span></p>
-          
+        <p> <span style="font-size: 18px;"> Please choose between using either the keyboard or the mouse as your input method. Do not use both at the same time. (If pressing <b>q</b> or <b>p</b> doesn't respond, you may need to use mouse for once.) </span></p>
           <div class="number-container">
           <p class="number" id="experimentCounter_practice" name="experimentCounter">0</p>
         </div>
-        <div id="practice-image-container">
+        <div id="practice-image-container" class="hidden">
           <img id="image_num_7" class='practice-image' src="/static/experiments/current/nikola_hitl_2nd/stimuli/image_num_7.png" width="auto">
           <img id="image_num_1" class='practice-image' src="/static/experiments/current/nikola_hitl_2nd/stimuli/image_num_1.png" width="auto">
           <img id="image_num_5" class='practice-image' src="/static/experiments/current/nikola_hitl_2nd/stimuli/image_num_5.png" width="auto">
@@ -111,16 +111,17 @@
       <div id="experiment_page" class="hidden instruction_page">
         Your task is to choose the <span style="font-size: 24px"><b>happier expressions</b></span> among every pair.</span> <br>
         <p><span style="font-size: 18px;"> You can use mouse to <span style="font-size: 30px;"><b>click</b></span> the figure you want to select directly.<br> Or you can also press <span style="font-size: 30px;"><b>q</b></span> on your keyboard for selecting the left figure, press <span style="font-size: 30px;"><b>p</b></span> for selecting the right figure. </span></p>
+        <p> <span style="font-size: 18px;"> Please choose between using either the keyboard or the mouse as your input method. Do not use both at the same time. (If pressing <b>q</b> or <b>p</b> doesn't respond, you may need to use mouse for once.) </span></p>
         
         <div class="number-container">
           <p>You have finished: </p>
           <p class="number" id="experimentCounter_rating" name="experimentCounter">0</p>
         </div>
 
-        <div id="experiment-image-container"></div> <br>
+        <div id="experiment-image-container" class="hidden"></div> <br>
         
         <div id="experiment_success" style="display:none;"> 
-          <button  onclick="my_submit(); window.toggle_instruction('finish_page');" class="my_button"> Submit! </button>
+          <button  onclick="window.toggle_instruction('finish_page');" class="my_button"> Submit! </button>
         </div>
       </div>
 
