@@ -2,7 +2,7 @@ let curRating;
 let curID;
 
 curID = 99999;
-const base_url = '/static/experiments/current/nikola_fear/stimuli/fear_selected_imgonly100/'
+const base_url = '/static/experiments/current/nikola_angry/stimuli/anger_selected_imgonly100/'
 var experimentCount = 0;
 const expIterval = 50;
 
@@ -366,7 +366,9 @@ function startExperiment() {
     // }
 
     // current image index
-    images = ['fe_1.png', 'fe_10.png', 'fe_11.png', 'fe_110.png', 'fe_125.png', 'fe_128.png', 'fe_143.png', 'fe_147.png', 'fe_150.png', 'fe_151.png', 'fe_153.png', 'fe_159.png', 'fe_16.png', 'fe_166.png', 'fe_17.png', 'fe_173.png', 'fe_174.png', 'fe_181.png', 'fe_184.png', 'fe_185.png', 'fe_191.png', 'fe_193.png', 'fe_197.png', 'fe_2.png', 'fe_201.png', 'fe_202.png', 'fe_203.png', 'fe_204.png', 'fe_206.png', 'fe_207.png', 'fe_211.png', 'fe_212.png', 'fe_22.png', 'fe_226.png', 'fe_232.png', 'fe_236.png', 'fe_237.png', 'fe_238.png', 'fe_249.png', 'fe_253.png', 'fe_26.png', 'fe_260.png', 'fe_271.png', 'fe_279.png', 'fe_287.png', 'fe_29.png', 'fe_291.png', 'fe_30.png', 'fe_300.png', 'fe_303.png', 'fe_307.png', 'fe_313.png', 'fe_336.png', 'fe_34.png', 'fe_340.png', 'fe_345.png', 'fe_349.png', 'fe_356.png', 'fe_362.png', 'fe_364.png', 'fe_376.png', 'fe_38.png', 'fe_380.png', 'fe_381.png', 'fe_382.png', 'fe_385.png', 'fe_39.png', 'fe_390.png', 'fe_393.png', 'fe_396.png', 'fe_402.png', 'fe_406.png', 'fe_408.png', 'fe_417.png', 'fe_42.png', 'fe_420.png', 'fe_427.png', 'fe_43.png', 'fe_431.png', 'fe_441.png', 'fe_442.png', 'fe_449.png', 'fe_451.png', 'fe_46.png', 'fe_472.png', 'fe_473.png', 'fe_475.png', 'fe_477.png', 'fe_484.png', 'fe_499.png', 'fe_5.png', 'fe_53.png', 'fe_57.png', 'fe_59.png', 'fe_69.png', 'fe_7.png', 'fe_8.png', 'fe_84.png', 'fe_90.png', 'fe_91.png', 'fe_93.png', 'fe_95.png']
+    // TODO change image for every set of exp
+    images = ['an_253.png', 'an_488.png', 'an_3.png', 'an_15.png', 'an_204.png', 'an_0.png', 'an_9.png', 'an_495.png', 'an_491.png', 'an_46.png', 'an_153.png', 'an_13.png', 'an_11.png', 'an_441.png', 'an_426.png', 'an_174.png', 'an_56.png', 'an_6.png', 'an_20.png', 'an_442.png', 'an_364.png', 'an_400.png', 'an_433.png', 'an_481.png', 'an_14.png', 'an_95.png', 'an_42.png', 'an_279.png', 'an_71.png', 'an_416.png', 'an_468.png', 'an_5.png', 'an_271.png', 'an_440.png', 'an_59.png', 'an_25.png', 'an_489.png', 'an_467.png', 'an_157.png', '._an_9.png', 'an_81.png', 'an_381.png', 'an_461.png', 'an_358.png', 'an_10.png', 'an_449.png', 'an_333.png', 'an_211.png', 'an_58.png', 'an_345.png', 'an_351.png', 'an_57.png', 'an_16.png', 'an_158.png', 'an_18.png', 'an_339.png', 'an_26.png', 'an_29.png', 'an_8.png', 'an_79.png', 'an_494.png', 'an_4.png', 'an_300.png', 'an_54.png', 'an_34.png', 'an_479.png', 'an_51.png', 'an_2.png', 'an_65.png', 'an_19.png', 'an_463.png', 'an_451.png', 'an_31.png', 'an_427.png', 'an_143.png', 'an_499.png', 'an_328.png', 'an_24.png', 'an_376.png', 'an_496.png', 'an_77.png', 'an_12.png', 'an_212.png', 'an_490.png', 'an_22.png', 'an_469.png', 'an_236.png', 'an_397.png', 'an_64.png', 'an_437.png', 'an_290.png', 'an_21.png', 'an_237.png', 'an_497.png', 'an_474.png', 'an_32.png', 'an_460.png', 'an_485.png', 'an_307.png', 'an_17.png', 'an_75.png', 'an_484.png', 'an_35.png']
+    
     // DEBUG
     // images = images.slice(0, 5);
 
@@ -427,6 +429,7 @@ function get_my_result() {
     var area = document.getElementById("area").value;
     var participant_id = document.getElementById("participant_id").value;
     var sortedList = sortedImgList.map(x => x.id.slice(91)+'.png')
+    var pairCompCounter = document.getElementById("experimentCounter_rating").textContent
     result = {
         'participant_id' : participant_id,
         'ID' : curID,
@@ -435,6 +438,7 @@ function get_my_result() {
         'practice_res' : practice_res,
         'pairwise_rating' : finalResult,
         'sortedlist' : sortedList,
+        'pairCompCounter' : pairCompCounter,
     }
     console.log("result is ", result)
     return result;
