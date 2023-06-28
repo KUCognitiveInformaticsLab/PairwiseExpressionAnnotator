@@ -2,7 +2,7 @@ let curRating;
 let curID;
 
 curID = 99999;
-const base_url = '/static/experiments/current/nikola_angry/stimuli/anger_selected_imgonly100/'
+const base_url = '/static/experiments/current/nikola_surprise/stimuli/surprise_selected_imgonly100/' // TODO modify here every emotion
 var experimentCount = 0;
 const expIterval = 50;
 
@@ -367,7 +367,7 @@ function startExperiment() {
 
     // current image index
     // TODO change image for every set of exp
-    images = ['an_253.png', 'an_488.png', 'an_3.png', 'an_15.png', 'an_204.png', 'an_0.png', 'an_9.png', 'an_495.png', 'an_491.png', 'an_46.png', 'an_153.png', 'an_13.png', 'an_11.png', 'an_441.png', 'an_426.png', 'an_174.png', 'an_56.png', 'an_6.png', 'an_20.png', 'an_442.png', 'an_364.png', 'an_400.png', 'an_433.png', 'an_481.png', 'an_14.png', 'an_95.png', 'an_42.png', 'an_279.png', 'an_71.png', 'an_416.png', 'an_468.png', 'an_5.png', 'an_271.png', 'an_440.png', 'an_59.png', 'an_25.png', 'an_489.png', 'an_467.png', 'an_157.png', 'an_81.png', 'an_381.png', 'an_461.png', 'an_358.png', 'an_10.png', 'an_449.png', 'an_333.png', 'an_211.png', 'an_58.png', 'an_345.png', 'an_351.png', 'an_57.png', 'an_16.png', 'an_158.png', 'an_18.png', 'an_339.png', 'an_26.png', 'an_29.png', 'an_8.png', 'an_79.png', 'an_494.png', 'an_4.png', 'an_300.png', 'an_54.png', 'an_34.png', 'an_479.png', 'an_51.png', 'an_2.png', 'an_65.png', 'an_19.png', 'an_463.png', 'an_451.png', 'an_31.png', 'an_427.png', 'an_143.png', 'an_499.png', 'an_328.png', 'an_24.png', 'an_376.png', 'an_496.png', 'an_77.png', 'an_12.png', 'an_212.png', 'an_490.png', 'an_22.png', 'an_469.png', 'an_236.png', 'an_397.png', 'an_64.png', 'an_437.png', 'an_290.png', 'an_21.png', 'an_237.png', 'an_497.png', 'an_474.png', 'an_32.png', 'an_460.png', 'an_485.png', 'an_307.png', 'an_17.png', 'an_75.png', 'an_484.png', 'an_35.png']
+    images = ['su_303.png', 'su_236.png', 'su_274.png', 'su_250.png', 'su_351.png', 'su_337.png', 'su_483.png', 'su_174.png', 'su_385.png', 'su_300.png', 'su_26.png', 'su_261.png', 'su_110.png', 'su_339.png', 'su_97.png', 'su_271.png', 'su_490.png', 'su_328.png', 'su_208.png', 'su_457.png', 'su_190.png', 'su_302.png', 'su_2.png', 'su_369.png', 'su_38.png', 'su_237.png', 'su_290.png', 'su_3.png', 'su_477.png', 'su_159.png', 'su_433.png', 'su_228.png', 'su_263.png', 'su_119.png', 'su_128.png', 'su_34.png', 'su_333.png', 'su_380.png', 'su_467.png', 'su_91.png', 'su_362.png', 'su_143.png', 'su_212.png', 'su_435.png', 'su_317.png', 'su_161.png', 'su_292.png', 'su_245.png', 'su_204.png', 'su_428.png', 'su_66.png', 'su_89.png', 'su_104.png', 'su_451.png', 'su_479.png', 'su_345.png', 'su_211.png', 'su_376.png', 'su_80.png', 'su_413.png', 'su_426.png', 'su_106.png', 'su_322.png', 'su_366.png', 'su_95.png', 'su_364.png', 'su_307.png', 'su_398.png', 'su_197.png', 'su_215.png', 'su_491.png', 'su_115.png', 'su_120.png', 'su_427.png', 'su_81.png', 'su_397.png', 'su_85.png', 'su_279.png', 'su_475.png', 'su_8.png', 'su_423.png', 'su_358.png', 'su_153.png', 'su_494.png', 'su_402.png', 'su_105.png', 'su_121.png', 'su_350.png', 'su_440.png', 'su_182.png', 'su_275.png', 'su_371.png', 'su_166.png', 'su_46.png', 'su_407.png', 'su_239.png', 'su_248.png', 'su_396.png', 'su_42.png', 'su_441.png', 'su_131.png', 'su_474.png']
     
     // DEBUG
     // images = images.slice(0, 5);
