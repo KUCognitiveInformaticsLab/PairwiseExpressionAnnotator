@@ -373,9 +373,6 @@ function startExperiment() {
         finishMessage.textContent = "Experiment finished. Please click the Submit button to submit the data. If you don't want to submit your data, just close this site. Thank you!";
         document.body.appendChild(finishMessage);
         
-        // submit the data
-        my_submit(); 
-
         // show the button
         document.getElementById("experiment_success").style.display = "block";
 
@@ -385,6 +382,9 @@ function startExperiment() {
             console.log(`${pair[0]} vs. ${pair[1]}: ${pair[2]}`);
             finalResult.push(pair);
         });
+
+        // submit the data
+        my_submit(); 
     });
 }
 
