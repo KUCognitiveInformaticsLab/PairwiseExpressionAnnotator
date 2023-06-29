@@ -368,7 +368,7 @@ function startExperiment() {
     // current image index
     // TODO change image for every set of exp
     images = ['sa_420.png', 'sa_28.png', 'sa_153.png', 'sa_245.png', 'sa_128.png', 'sa_34.png', 'sa_204.png', 'sa_237.png', 'sa_288.png', 'sa_207.png', 'sa_142.png', 'sa_443.png', 'sa_290.png', 'sa_58.png', 'sa_84.png', 'sa_379.png', 'sa_95.png', 'sa_8.png', 'sa_247.png', 'sa_146.png', 'sa_89.png', 'sa_457.png', 'sa_6.png', 'sa_42.png', 'sa_497.png', 'sa_144.png', 'sa_1.png', 'sa_77.png', 'sa_298.png', 'sa_390.png', 'sa_381.png', 'sa_46.png', 'sa_339.png', 'sa_236.png', 'sa_2.png', 'sa_165.png', 'sa_111.png', 'sa_158.png', 'sa_147.png', 'sa_496.png', 'sa_123.png', 'sa_265.png', 'sa_274.png', 'sa_174.png', 'sa_169.png', 'sa_269.png', 'sa_16.png', 'sa_452.png', 'sa_211.png', 'sa_280.png', 'sa_209.png', 'sa_7.png', 'sa_35.png', 'sa_279.png', 'sa_402.png', 'sa_3.png', 'sa_491.png', 'sa_300.png', 'sa_161.png', 'sa_43.png', 'sa_59.png', 'sa_451.png', 'sa_254.png', 'sa_168.png', 'sa_234.png', 'sa_260.png', 'sa_140.png', 'sa_124.png', 'sa_307.png', 'sa_483.png', 'sa_226.png', 'sa_107.png', 'sa_345.png', 'sa_422.png', 'sa_474.png', 'sa_212.png', 'sa_151.png', 'sa_261.png', 'sa_166.png', 'sa_351.png', 'sa_241.png', 'sa_499.png', 'sa_329.png', 'sa_263.png', 'sa_481.png', 'sa_253.png', 'sa_376.png', 'sa_387.png', 'sa_354.png', 'sa_368.png', 'sa_313.png', 'sa_463.png', 'sa_271.png', 'sa_120.png', 'sa_442.png', 'sa_328.png', 'sa_407.png', 'sa_286.png', 'sa_26.png', 'sa_436.png', 'sa_143.png', 'sa_364.png']
-    
+
     // DEBUG
     // images = images.slice(0, 5);
 
@@ -394,9 +394,6 @@ function startExperiment() {
         finishMessage.textContent = "Experiment finished. Please click the Submit button to submit the data. If you don't want to submit your data, just close this site. Thank you!";
         document.body.appendChild(finishMessage);
         
-        // submit the data
-        my_submit(); 
-
         // show the button
         document.getElementById("experiment_success").style.display = "block";
 
@@ -406,6 +403,9 @@ function startExperiment() {
             console.log(`${pair[0]} vs. ${pair[1]}: ${pair[2]}`);
             finalResult.push(pair);
         });
+
+        // submit the data
+        my_submit(); 
     });
 }
 
